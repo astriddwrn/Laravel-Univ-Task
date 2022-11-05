@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Member;
+use App\Http\Controllers\BlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +19,12 @@ Route::get('/', function () {
     return view('index');
 });
 Route::get('/about', function () {
-    return view('about');
+    $dataMembers = Member::getData();
+    return view('about', ['data' => $dataMembers]);
 });
-Route::get('/blog', function () {
-    return view('blog');
-});
+Route::get('/blog', [BlogController::class, 'index'])->name('blog');
+Route::get('/blog/{id}', [BlogController::class, 'viewById'])->name('byId');
+
+
+
 
